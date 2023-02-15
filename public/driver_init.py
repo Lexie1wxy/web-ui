@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: base_init.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/3/18  18:13
 import sys
 from typing import TypeVar
@@ -16,7 +16,7 @@ from selenium import webdriver
 from appium import webdriver as appbdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from public.common import ErrorExcep, logger, reda_conf
+from public.common import ErrorExcep, logger, read_conf
 from config import WIN_CHROMEDRIVER, LUINX_CHROMEDRIVER, MAC_CHROMEDRIVER
 from config import WIN_FIREFOXDRIVER, LUINX_FIREFOXDRIVER, MAC_FIREFOXDRIVER
 from config import IE_PATH
@@ -27,13 +27,13 @@ DAY = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 T = TypeVar('T')  # 可以是任何类型。
 
 # 读取配置参数
-WEB_UI = reda_conf('WEB_UI')
+WEB_UI = read_conf('WEB_UI')
 URL = WEB_UI.get('WEB_URL')
 BROWSERNAME = WEB_UI.get('WEB_BROWSERNAME')
 WEB_HUB_HOST = WEB_UI.get('WEB_HUB_HOST')
 WEB_IS_COLONY = WEB_UI.get('WEB_IS_COLONY')
 
-APP_UI = reda_conf('APP_UI')
+APP_UI = read_conf('APP_UI')
 PLATFORM = APP_UI.get('APP_PLATFORM')
 IOS_CAPA = APP_UI.get('IOS_CAPA')
 ANDROID_CAPA = APP_UI.get('ANDROID_CAPA')
@@ -188,10 +188,9 @@ class WebInit:
         if WEB_IS_COLONY:
             return self.setups()
         else:
-
             return self.setup()
 
-    def browaer_setup_args(self, driver: T) -> T:
+    def browser_setup_args(self, driver: T) -> T:
         """
         单机浏览器参数设置
         :param driver: driver驱动浏览器
@@ -201,7 +200,7 @@ class WebInit:
         driver.get(self.url)
         return driver
 
-    def browaer_setups_args(self, descap: str, option=None) -> T:
+    def browser_setups_args(self, descap: str, option=None) -> T:
         """
         集群浏览器参数设置
         :param descap:启动参数
@@ -224,40 +223,38 @@ class WebInit:
         try:
             if self.inspect_url_code(self.url):  # 如果项目地址正常
                 current_sys = sys.platform.lower()
-                log_path = os.path.join(LOG_DIR, f'{DAY}firefox.log')
+                log_path = os.path.join(LOG_DIR, f'{DAY}chrome.log')
 
                 if current_sys == 'linux':  # linux系统
 
                     if self.browser == 'chrome':  # 谷歌浏览器
                         option = self.linux_chrome_args
                         driver = webdriver.Chrome(executable_path=LUINX_CHROMEDRIVER, options=option)
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
 
                     elif self.browser == 'firefox':  # 火狐浏览器
                         options = self.linux_firefox_args
                         driver = webdriver.Firefox(executable_path=LUINX_FIREFOXDRIVER, options=options,
                                                    service_log_path=log_path)
-                        drivers = self.browaer_setup_args(driver)
+                        drivers = self.browser_setup_args(driver)
                         return drivers  # 在linux下启用 火狐浏览器需要借助Display
 
                     else:
                         logger.error(f'linux系统不支持此浏览器: {self.browser}')
-
-
                 elif current_sys == 'darwin':  # mac 系统
 
                     if self.browser == 'chrome':
 
                         driver = webdriver.Chrome(executable_path=MAC_CHROMEDRIVER)
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
 
                     elif self.browser == 'firefox':
                         driver = webdriver.Firefox(executable_path=MAC_FIREFOXDRIVER, service_log_path=log_path)
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
 
                     elif self.browser == 'safari':
                         driver = webdriver.Safari()
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
                     else:
                         logger.error(f'mac系统不支持此浏览器: {self.browser}')
 
@@ -266,15 +263,15 @@ class WebInit:
                     if self.browser == 'ie':
                         logger.warning('请确保当前服务器安装IE!')
                         driver = webdriver.Ie(executable_path=IE_PATH)
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
 
                     if self.browser == 'chrome':
                         driver = webdriver.Chrome(executable_path=WIN_CHROMEDRIVER)
-                        return self.browaer_setup_args(driver)
+                        return self.browser_setup_args(driver)
 
                     elif self.browser == 'firefox':
                         driver = webdriver.Firefox(executable_path=WIN_FIREFOXDRIVER, service_log_path=log_path)
-                        return self.browaer_setup_args(driver, )
+                        return self.browser_setup_args(driver, )
 
                     else:
                         logger.error(f'windos系统不支持此浏览器: {self.browser}')
@@ -284,8 +281,6 @@ class WebInit:
 
             else:
                 logger.error('项目地址地址请求异常！！！')
-
-
         except SessionNotCreatedException:
             logger.warning('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
             logger.error('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
@@ -302,12 +297,12 @@ class WebInit:
                     if self.browser == 'chrome':
                         option = self.linux_chrome_args
                         descap = DesiredCapabilities.CHROME
-                        return self.browaer_setups_args(descap, option=option)
+                        return self.browser_setups_args(descap, option=option)
 
                     elif self.browser == 'firefox':
                         options = self.linux_firefox_args
                         descap = DesiredCapabilities.FIREFOX
-                        return self.browaer_setups_args(descap, option=options)
+                        return self.browser_setups_args(descap, option=options)
                     else:
                         logger.error('linux不支持此浏览器')
 
@@ -315,15 +310,15 @@ class WebInit:
                 elif current_sys == 'darwin':  # mac 系统
                     if self.browser == 'safari':
                         descap = DesiredCapabilities.SAFARI
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     elif self.browser == 'chrome':
                         descap = DesiredCapabilities.CHROME
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     elif self.browser == 'firefox':
                         descap = DesiredCapabilities.FIREFOX
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     else:
                         logger.error('mac不支持此浏览器')
@@ -332,15 +327,15 @@ class WebInit:
                 elif current_sys == 'win32':
                     if self.browser == 'ie':
                         descap = DesiredCapabilities.INTERNETEXPLORER
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     if self.browser == 'chrome':
                         descap = DesiredCapabilities.CHROME
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     elif self.browser == 'firefox':
                         descap = DesiredCapabilities.FIREFOX
-                        return self.browaer_setups_args(descap)
+                        return self.browser_setups_args(descap)
 
                     else:
                         logger.error('windos不支持此浏览器')

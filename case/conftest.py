@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 # @File: conftest.py.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2020/10/26  20:16
 
 import pytest
 
 from public import WebInit, AppInit
-from public import reda_conf
+from public import read_conf
 
 
 @pytest.fixture(scope='function')
 def goDriver():
-    CASE_TYPE = reda_conf('CURRENCY').get('CASE_TYPE')
+    CASE_TYPE = read_conf('CURRENCY').get('CASE_TYPE')
 
-    APP_UI = reda_conf('APP_UI')
+    APP_UI = read_conf('APP_UI')
     IS_EXIT_APPLICATION = APP_UI.get('APP_IS_EXIT_APPLICATION')
     PLATFORM = APP_UI.get('APP_PLATFORM')
     ANDROID_CAPA = APP_UI.get('ANDROID_CAPA')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: selenium_driver.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2020/11/4  14:40
 
 import os
@@ -11,7 +11,6 @@ from enum import Enum
 from typing import TypeVar, Optional
 
 import allure
-from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -20,24 +19,24 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 from config import PRPORE_SCREEN_DIR
-from public.common import ErrorExcep, logger, is_assertion, reda_conf
-from public.reda_data import GetCaseYmal, replace_py_yaml
+from public.common import ErrorExcep, logger, is_assertion, read_conf
+from public.read_data import GetCaseYmal, replace_py_yaml
 
 EM = TypeVar('EM')  # 可以是任何类型。
 
 # 读取配置参数
-WEB_UI = reda_conf('WEB_UI')
+WEB_UI = read_conf('WEB_UI')
 WEB_POLL_FREQUENCY = WEB_UI.get('WEB_WIMPLICITLY_WAIT_TIME')
 WEB_IMPLICITLY_WAIT_TIME = WEB_UI.get('WEB_POLL_FREQUENCY')
 
 # 读取配置参数
-APP_UI = reda_conf('APP_UI')
+APP_UI = read_conf('APP_UI')
 APP_POLL_FREQUENCY = APP_UI.get('APP_POLL_FREQUENCY')
 APP_IMPLICITLY_WAIT_TIME = APP_UI.get('APP_IMPLICITLY_WAIT_TIME')
 PLATFORM = APP_UI.get('APP_PLATFORM')
 
 # 读取 项目类型
-CASE_TYPE = reda_conf('CURRENCY').get('CASE_TYPE')
+CASE_TYPE = read_conf('CURRENCY').get('CASE_TYPE')
 
 if CASE_TYPE.lower() == 'web':
     POLL_FREQUENCY = WEB_POLL_FREQUENCY
@@ -197,27 +196,6 @@ class Base:
         if types not in app_locate_typess:
             logger.error(f'app目前只支持{app_locate_typess}')
             raise ErrorExcep('操作类型不支持')
-
-        if types == "accessibility_id":
-            return AppiumBy.ACCESSIBILITY_ID
-
-        elif types == "ios_predicate" and PLATFORM.lower() == 'ios':
-            return AppiumBy.IOS_PREDICATE
-
-        elif types == "ios_class_chain" and PLATFORM.lower() == 'ios':
-            return AppiumBy.IOS_CLASS_CHAIN
-
-        elif types == "android_uiautomator" and PLATFORM.lower() == 'android':
-            return AppiumBy.ANDROID_UIAUTOMATOR
-
-        elif types == "android_viewtag" and PLATFORM.lower() == 'android':
-            return AppiumBy.ANDROID_VIEWTAG
-
-        elif types == "android_datamatcher" and PLATFORM.lower() == 'android':
-            return AppiumBy.ANDROID_DATA_MATCHER
-
-        elif types == "android_viewmatcher" and PLATFORM.lower() == 'android':
-            return AppiumBy.ANDROID_VIEW_MATCHER
 
         elif types == "id":
             return By.ID
@@ -479,7 +457,7 @@ class Base:
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
 
-    def screen_shot(self, doc: Optional[None] = 'app', imgreport: bool = True) -> str or None:
+    def screen_shot(self, doc: Optional[None] = 'web', imgreport: bool = True) -> str or None:
         """
         截取当前界面图片
         :param doc:  str 名称
@@ -1028,6 +1006,7 @@ class Web(Base):
         :param text: 输入文本内容
         :param index: 多个步骤列表索引
         :param wait: 操作等待
+
         :return:
 
         """
@@ -1153,7 +1132,7 @@ class Web(Base):
 
 class AutoRunCase(Web):
     """
-    自动执行测试用列
+    自动执行测试用例
     """
 
     def run(self, yamlfile, case, test_date=None, forwait=None):

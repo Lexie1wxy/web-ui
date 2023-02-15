@@ -10,7 +10,7 @@
       locate: wd              # 定位元素
       listindex:              # 多个时列表索引 单个为空 /int
       locawait:              #操作等待时间  folt/s
-      info: 点击输入框收入       # 操作说明
+      info: 点击输入框输入       # 操作说明
 
 - casename: click_search_button
   precond: # 前置说明

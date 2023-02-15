@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: test_demo.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2020/10/26  11:08
 
 import os
@@ -9,7 +9,7 @@ import os
 import allure
 import pytest
 
-from public.reda_data import reda_pytestdata
+from public.read_data import read_pytestdata
 from public.web_base import AutoRunCase
 
 
@@ -20,10 +20,10 @@ class TestBaiDu:
     @allure.story("所搜验证")  # 模块说明
     @allure.title("输入内容并搜索")  # 用例标题
     @allure.description('输入多参数搜索')  # 用例描述
-    @pytest.mark.testbaidu_web1  # 用列标记
-    @pytest.mark.parametrize('testdate', reda_pytestdata(__file__, 'test_baidu_search'))  # 测试数据
-    def test_baidu_search(self, goDriver, testdate):
+    @pytest.mark.testbaidu_web1  # 用例标记
+    @pytest.mark.parametrize('testdata', read_pytestdata(__file__, 'test_baidu_search'))  # 测试数据
+    def test_baidu_search(self, goDriver, testdata):
         with allure.step('输入搜索内容'):
             baidu = AutoRunCase(goDriver)
 
-            baidu.run(__file__, 'test_baidu_search', test_date=testdate, forwait=1)
+            baidu.run(__file__, 'test_baidu_search', test_date=testdata, forwait=1)

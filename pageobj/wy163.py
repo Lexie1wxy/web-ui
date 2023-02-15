@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: login.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2020/10/22  16:21
 
 import os

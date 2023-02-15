@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: mail.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2022/2/22  13:59
 
 import os
@@ -14,10 +14,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from config import PRPORE_TMP
-from public.common import logger, reda_conf
+from public.common import logger, read_conf
 
 # 读取配置参数
-EMAIL = reda_conf('MSG').get('EMAIL')
+EMAIL = read_conf('MSG').get('EMAIL')
 EMAIL_PORT = EMAIL.get('email_port')
 EMAIL_HOST = EMAIL.get('email_host')
 SEND_EMAIL_PASSWORD = EMAIL.get('send_email_password')
@@ -181,5 +181,5 @@ class SendEMail:
 #     e = SendEMail()
 #
 #     e.send_text('python发送邮件测试', 'python20222')
-# e.send_file(['hanwenlu@reda-flight.com'], 'demo项目测试完成已经完成发送报告请查收', 'demo项目测测试结果',
-#             '/Users/reda-flight/Desktop/svn/web-ui/output/report_allure', 'testport')
+# e.send_file(['Wxy@read-flight.com'], 'demo项目测试完成已经完成发送报告请查收', 'demo项目测测试结果',
+#             '/Users/read-flight/Desktop/svn/web-ui/output/report_allure', 'testport')

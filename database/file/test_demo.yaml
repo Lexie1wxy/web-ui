@@ -69,7 +69,7 @@
       android_locate:               # *项目非app时可忽略
       listindex:                    # 多个时列表索引 单个为空 /int
       locawait:                     #操作等待时间  folt/s
-      info: 点击输入框收入             # 操作说明
+      info: 点击输入框输入             # 操作说明
     - casesteid: 2
       types: id
       operate: click
@@ -101,7 +101,7 @@
       android_locate: new UiSelector().text("同意")              # android定位器
       listindex:                                                # 多个时列表索引 单个为空 /int
       locawait:                                                 #操作等待时间  folt/s
-      info: 点击输入框收入                                         # 操作说明
+      info: 点击输入框输入                                         # 操作说明
 
 ###### web yaml模板
 - casename: input_name                     # 对应类的 函数

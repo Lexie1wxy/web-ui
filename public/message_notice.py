@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 # @File: message_notice.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2022/2/23  10:52
 
 from typing import TypeVar
 
 import requests
 
-from public.common import logger,reda_conf
+from public.common import logger,read_conf
 
 T = TypeVar('T')  # 可以是任何类型。
 
 # 读取配置参数
-MSG = reda_conf('MSG')
+MSG = read_conf('MSG')
 WECHAT_WEBHOOK = MSG.get('WECHAT').get('wechat_webhook')
 WECHAT_MOBILE_LIST = MSG.get('WECHAT').get('wechat_mobile_list')
 DINGDING_MOBILE_LIST = MSG.get('DINGDING').get('dingding_mobile_list')

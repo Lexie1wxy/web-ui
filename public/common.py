@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: common.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/2/1  16:11
 
 import os
@@ -25,7 +25,7 @@ from config import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DI
 T = TypeVar('T')
 
 
-def reda_conf(value: str) -> list or dict or str:
+def read_conf(value: str) -> list or dict or str:
     """
     读取yaml配置文件
     :param value: 读取的建
@@ -41,7 +41,7 @@ def reda_conf(value: str) -> list or dict or str:
         logger.error(f'读取yaml异常{e}')
 
 
-levels = reda_conf('CURRENCY').get('LEVEL')  # 读取配置
+levels = read_conf('CURRENCY').get('LEVEL')  # 读取配置
 
 
 
@@ -207,7 +207,7 @@ class DelReport:
         执行删除测试报告记录
         :return:
         """
-        is_clean_report = reda_conf('CURRENCY').get('IS_CLEAN_REPORT')
+        is_clean_report = read_conf('CURRENCY').get('IS_CLEAN_REPORT')
         if is_clean_report == True:  # 如果为 True 清除 PRPORE_ALLURE_DIR、 PRPORE_JSON_DIR 、PRPORE_SCREEN_DIR 路径下报告
 
             try:
@@ -443,7 +443,6 @@ class ImgDiff:
             return n
         except Exception as e:
             logger.error(f'对比差感知哈希错误:{e}')
-
 # def read_img_verification_code(image: str):
 #     """
 #     读取图片验证码 借助 ddddocr 此库相对识别高 https://github.com/sml2h3/ddddocr
@@ -460,9 +459,9 @@ class ImgDiff:
 
 #
 # d = ImgDiff.dhaDiff('test.png1',
-#                     r'/Users/reda-flight/Desktop/svn/reda-ui-auto/output/report_screen/test_login_1624331940125.png')
+#                     r'/Users/read-flight/Desktop/svn/read-ui-auto/output/report_screen/test_login_1624331940125.png')
 #
 # print(d)
 # if __name__ == '__main__':
-#     l=reda_conf('CURRENCY').get('LEVEL')
+#     l=read_conf('CURRENCY').get('LEVEL')
 #     print(l)

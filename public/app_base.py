@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: appbase.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/3/18  18:16
 
 
@@ -10,12 +10,12 @@ from typing import TypeVar, Optional, Callable
 
 from appium.webdriver.common.touch_action import TouchAction
 
-from public.common import ErrorExcep, logger, reda_conf
-from public.reda_data import replace_py_yaml
+from public.common import ErrorExcep, logger, read_conf
+from public.read_data import replace_py_yaml
 from public.web_base import Base, Operation
 
 # 读取配置参数
-APP_UI = reda_conf('APP_UI')
+APP_UI = read_conf('APP_UI')
 POLL_FREQUENCY = APP_UI.get('APP_POLL_FREQUENCY')
 IMPLICITLY_WAIT_TIME = APP_UI.get('APP_IMPLICITLY_WAIT_TIME')
 PLATFORM = APP_UI.get('APP_PLATFORM')

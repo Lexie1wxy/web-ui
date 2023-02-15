@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # @File: test_android.py.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/6/22  16:58
 
 # -*- coding: utf-8 -*-
 # @File: test_android.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/6/22  11:43
 
 import os

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: db.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2021/3/18  19:23
 
 from typing import TypeVar, Tuple, List
@@ -11,14 +11,14 @@ import pymysql
 import redis
 from rediscluster import RedisCluster
 
-from public.common import logger,reda_conf
+from public.common import logger,read_conf
 
 
 T = TypeVar('T')  # 可以是任何类型。
 
 
 # 读取配置参数
-DB = reda_conf('DB')
+DB = read_conf('DB')
 MYSQL = DB.get('MYSQL')
 ORACLE = DB.get('ORACLE')
 REDIS = DB.get('REDIS')

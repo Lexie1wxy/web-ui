@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @File: run.py
-# @Author: HanWenLu
-# @E-mail: wenlupay@163.com
+# @Author: Wxy
+# @E-mail: Wxy@163.com
 # @Time: 2020/10/26  19:04
 
 import os
@@ -197,7 +197,7 @@ class RunPytest:
         return html_index
 
     @staticmethod
-    def run_bebug():
+    def run_bebug(marker_name):
         """
         bebug 调试
         :return:
@@ -206,10 +206,11 @@ class RunPytest:
         # 执行前检查是否清除报告
         DelReport().run_del_report()
 
-        pytest.main(
-            ['-m', 'testbaidu_web', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+        # pytest.main(
+        #     ['-m', 'testbaidu_web', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+        pytest.main(['-m', marker_name, '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
-        #生成测试报告
+        # 生成测试报告
         os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
         logger.info('测试报告生成完成！')
         #
@@ -222,7 +223,7 @@ class RunPytest:
 
 if __name__ == '__main__':
     # RunPytest.run()
-    RunPytest.run_bebug()
+    RunPytest.run_bebug('testbaidu_web1')
 
 #  RunPytest.run() Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称) True(开启邮件发送) a(启用企业微信钉钉消息通知)
 # addopts 参数说明
