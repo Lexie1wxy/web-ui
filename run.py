@@ -223,7 +223,7 @@ class RunPytest:
 
 if __name__ == '__main__':
     # RunPytest.run()
-    RunPytest.run_bebug('testbaidu_web1')
+    RunPytest.run_bebug('test_supervision_login1')
 
 #  RunPytest.run() Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称) True(开启邮件发送) a(启用企业微信钉钉消息通知)
 # addopts 参数说明

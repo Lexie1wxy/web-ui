@@ -77,14 +77,13 @@ def find_dict(will_find_dist: dict, find_keys: T) -> list or int:
         return value_found
 
 
-def is_assertion(dicts: T, actual: T) -> None:
+def is_assertion(dicts: T, actual: T) -> bool:
     """
     断言参数
     :param dicts: dict 断言参数
     :param actual: 实际结果
     :return:
     """
-
     if dicts is not None:
         is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
 
@@ -101,24 +100,27 @@ def is_assertion_results(actual: T, expect: T, types: str) -> bool:
         if isinstance(expect, dict):
             actual = find_dict(actual, list(expect)[0])  # 利用字典的键获取断言的值
             expect = list(expect.values())[0]
+    logger.debug("断言{}是否{}{}".format(actual, types, expect))
     if types == '==':
-        assert expect == actual
+        assert expect == actual, f"{expect} != {actual}"
         return True
 
     elif types == '!=':
-        assert expect != actual
+        assert expect != actual, f"{expect} == {actual}"
         return True
 
     elif types == 'in':
-        assert expect in actual
+        assert expect in actual, f"{expect} not in {actual}"
         return True
 
     elif types == 'notin':
-        assert expect not in actual
+        assert expect not in actual, f"{expect} in {actual}"
         return True
 
-    elif types == None:
+    elif types is None:
+        logger.error('没有输入类型！！')
         return False
+
     else:
         logger.error('输入的类型不支持！！')
         return False

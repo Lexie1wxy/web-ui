@@ -5,9 +5,12 @@
 # @Time: 2020/10/26  20:16
 
 import pytest
+from _pytest.config import Config
+from _pytest.fixtures import FixtureRequest
+from selenium.common.exceptions import WebDriverException
 
 from public import WebInit, AppInit
-from public import read_conf
+from public import read_conf, logger
 
 
 @pytest.fixture(scope='function')

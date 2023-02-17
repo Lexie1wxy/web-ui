@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2023/2/14 16:32
 # @Author : wxy
-# @File : test_supervison_login.py
+# @File : test_supervision_login.py
 
 import os
 
@@ -21,7 +21,7 @@ class TestBaiDu:
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web_test  # 用例标记
     @pytest.mark.parametrize('content', read_pytestdata(__file__, 'test_baidu_search'))  # 测试数据
-    def test_baidu_search(self, goDriver, content):
+    def test_baidu_search123(self, goDriver, content):
         baidu = BaiDu(goDriver)
 
         with allure.step('输入搜索内容'):

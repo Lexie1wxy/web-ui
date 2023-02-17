@@ -1010,7 +1010,7 @@ class Web(Base):
         :return:
 
         """
-
+        print("")
         if operate not in Operation.web_operation.value:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
             logger.error(f'目前只支持{Operation.web_operation.value}')
@@ -1097,11 +1097,11 @@ class Web(Base):
     def webexe(self, yamlfile, case, text=None, wait=0.1):
         """
         自动执行定位步骤
-        :param yamlfile:  yaml文件
-        :param case: yaml定位用例
+        :param yamlfile:  yaml文件的路径
+        :param case: yaml文件中的定位用例方法名
         :param text:  输入内容
-        :param wait:  等待多少
-        :return:
+        :param wait:  等待多长时间
+        :return: 断言结果
         """
         relust = None  # 断言结果  最后一步才返回
 
@@ -1176,5 +1176,13 @@ class AutoRunCase(Web):
 
         # 断言函数
         if ('assertion' and 'assertype') in test_dict[0] and relust:  # 有断言需求并且有实际值才进行断言
+            # 第一次使用is_assertion记录测试失败的结果，以便在测试失败时进行截图和其他必要的操作
+            try:
+                is_assertion(test_date, relust)
+            except AssertionError as e:
+                # 如果测试断言结果失败就截图
+                self.screen_shot()
+                # logger.debug(e)
+            # 第二次使用is_assertion进行实际的测试，确保成功。如果失败，第二个assert语句会引发一个异常被pytest本身捕捉到
             is_assertion(test_date, relust)
-        # return relust
+            # return result

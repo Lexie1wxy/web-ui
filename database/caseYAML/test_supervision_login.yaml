@@ -1,0 +1,8 @@
+- model: TestSupervisionLogin                  # 对应case的类名称
+
+- casename: test_supervision_login_success     # 对应类的 函数
+  title: 用户成功登录                # 操作标题
+  precond: 用户输入网址进入督办登录界面                       # 前置说明
+  testdata: # 测试数据 /列表
+    - username: 195832
+      password: 111111
