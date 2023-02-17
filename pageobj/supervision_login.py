@@ -30,7 +30,14 @@ class SupervisonLogin(Web):
         点击登录
         :return:
         """
-        self.webexe(__file__, sys._getframe().f_code.co_name,)
+        self.webexe(__file__, sys._getframe().f_code.co_name)
+
+    def get_web_title(self, assertion, assertype):
+        """
+        获取网站标题并断言
+        :return:
+        """
+        self.webexe(__file__, sys._getframe().f_code.co_name, assertion=assertion, assertype=assertype)
 
 
 

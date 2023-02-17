@@ -19,8 +19,8 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 from config import PRPORE_SCREEN_DIR
-from public.common import ErrorExcep, logger, is_assertion, read_conf
-from public.read_data import GetCaseYmal, replace_py_yaml
+from public.common import ErrorExcep, logger, is_assertion, read_conf, is_assertion_results
+from public.read_data import GetCaseYmal, replace_py_yaml, replace_test_locator
 
 EM = TypeVar('EM')  # 可以是任何类型。
 
@@ -1094,14 +1094,14 @@ class Web(Base):
                 logger.debug(notes)
                 return self.web_html_content
 
-    def webexe(self, yamlfile, case, text=None, wait=0.1):
+    def webexe(self, yamlfile, case, text=None, assertion=None, assertype=None, wait=0.1):
         """
         自动执行定位步骤
-        :param yamlfile:  yaml文件的路径
-        :param case: yaml文件中的定位用例方法名
+        :param yamlfile:  yaml文件
+        :param case: yaml定位用例
         :param text:  输入内容
-        :param wait:  等待多长时间
-        :return: 断言结果
+        :param wait:  等待多少
+        :return:
         """
         relust = None  # 断言结果  最后一步才返回
 
@@ -1127,6 +1127,17 @@ class Web(Base):
                 wait = waits
 
             self.sleep(wait)
+
+        # 断言函数
+        if assertion and assertype and relust:  # 有断言需求并且有实际值才进行断言
+            # 第一次使用is_assertion记录测试失败的结果，以便在测试失败时进行截图和其他必要的操作
+            try:
+                is_assertion_results(relust, assertion, assertype)
+            except AssertionError as e:
+                # 如果测试断言结果失败就截图
+                self.screen_shot()
+            # 第二次使用is_assertion进行实际的测试，确保成功。如果失败，第二个assert语句会引发一个异常被pytest本身捕捉到
+                is_assertion_results(relust, assertion, assertype)
         return relust
 
 
@@ -1146,12 +1157,9 @@ class AutoRunCase(Web):
         """
 
         relust = None
-
         yaml = replace_py_yaml(yamlfile)
-
         locator_data = self.get_case(yaml, case)
         test_dict = locator_data.test_data()
-
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
@@ -1182,7 +1190,5 @@ class AutoRunCase(Web):
             except AssertionError as e:
                 # 如果测试断言结果失败就截图
                 self.screen_shot()
-                # logger.debug(e)
             # 第二次使用is_assertion进行实际的测试，确保成功。如果失败，第二个assert语句会引发一个异常被pytest本身捕捉到
             is_assertion(test_date, relust)
-            # return result

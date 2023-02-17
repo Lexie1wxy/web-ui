@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*- 
-# @Time : 2023/2/15 16:42 
+# -*- coding: utf-8 -*-
+# @Time : 2023/2/15 16:42
 # @Author : wxy
 # @File : test_supervision_login1.py
 
@@ -13,6 +13,8 @@ from public.web_base import AutoRunCase
 
 
 # 修改 setting  URL
+@allure.feature("督办登录")  # 测试用例特性（主要功能模块）
+@allure.story("督办登录")  # 模块说明
 class TestSupervisionLogin:
     @allure.feature("督办登录")  # 测试用例特性（主要功能模块）
     @allure.story("督办登录")  # 模块说明

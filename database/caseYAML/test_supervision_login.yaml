@@ -6,3 +6,9 @@
   testdata: # 测试数据 /列表
     - username: 195832
       password: 111111
+      assertion: "企业智慧治理主2313数据运营平台"             # *断言时必填
+      assertype: '=='                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
+    - username: 195832
+      password: 111111
+      assertion: "企业智慧治理主数据运营平台"             # *断言时必填
+      assertype: '=='                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)

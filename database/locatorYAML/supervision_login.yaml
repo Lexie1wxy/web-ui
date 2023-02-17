@@ -35,3 +35,15 @@
       listindex: # 多个时列表索引 单个为空 /int
       locawait:              #操作等待时间  folt/s
       info: 点击登录页面
+
+- casename: get_web_title     # 对应类的 函数
+  precond:                  # 前置说明
+  testdata: # 测试数据 /列表
+  element: # 操作步骤 /列表
+    - casesteid: 4
+      types: function
+      operate: web_title
+      locate:
+      listindex:
+      locawait:
+      info:  获取当前HTML页面title # 预期结果

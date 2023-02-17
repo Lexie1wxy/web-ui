@@ -116,7 +116,7 @@ class GetCaseYmal:
                 data = yaml.load(f, Loader=yaml.FullLoader)
                 f.close()
                 return data
-        except  Exception:
+        except Exception:
             logger.error('Error opening ymal file')
 
     def get_yaml(self):
@@ -644,6 +644,16 @@ def replace_py_yaml(file):
     :return:
     """
     return os.path.basename(file).replace('py', 'yaml')
+
+
+def replace_test_locator(file):
+    """
+    当前test前缀文件转为 locator前缀
+    :param file:
+    :return:
+    """
+    print(os.path.basename(file).replace('test', 'locator'))
+    return os.path.basename(file).replace('test', 'locator')
 
 
 # 快速获取测试数据 *元组 WEB、APP
